@@ -203,10 +203,18 @@ Returns the form definition. Cached 60 s.
   "clubId": "britsport",
   "formId": "B171388180BC457D9887AD92B6CCFC86",
   "title": "Coding camp summer 2025",
-  "registrationOpens": "2027-12-16T00:00:00Z",
+  "registrationOpens": "2024-12-16T00:00:00Z",
   "memberTypes": [
-    { "id": "8FE4113D4E4020E0DCF887803A886981", "name": "Active Member" },
-    { "id": "4237C55C5CC3B4B082CBF2540612778E", "name": "Social Member" }
+    {
+      "id": "8FE4113D4E4020E0DCF887803A886981",
+      "name": "Active Member",
+      "description": "Full participation rights — compete in matches, train with the squad, and vote at club meetings."
+    },
+    {
+      "id": "4237C55C5CC3B4B082CBF2540612778E",
+      "name": "Social Member",
+      "description": "Support the club without competing — attend events, cheer on the team, and join club socials."
+    }
   ]
 }
 ```
@@ -223,7 +231,6 @@ Returns the form definition. Cached 60 s.
   "email":               "jane@example.com",
   "phone":               "+47 123 45 678",
   "birthDate":           "1995-06-15",
-  "website":             "",
   "cfTurnstileResponse": "<token>"
 }
 ```
