@@ -1,0 +1,48 @@
+services:
+
+  # ── PostgreSQL ────────────────────────────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB:       spond
+      POSTGRES_USER:     spond
+      POSTGRES_PASSWORD: spond
+    ports:
+      - "5432:5432"           # expose for local tools (DBeaver, psql, etc.)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U spond -d spond"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # ── Spring Boot backend ───────────────────────────────────────────────────────
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      # Override the SSL URL from application.properties — local Postgres has no SSL
+      SPRING_DATASOURCE_URL:      jdbc:postgresql://db:5432/spond?prepareThreshold=0
+      SPRING_DATASOURCE_USERNAME: spond
+      SPRING_DATASOURCE_PASSWORD: spond
+      # Turnstile test secret — always passes, safe for local dev
+      CF_TURNSTILE_SECRET:        1x0000000000000000000000000000000AA
+      ALLOWED_ORIGINS:            http://localhost:3000
+    depends_on:
+      db:
+        condition: service_healthy   # wait for Postgres to be ready before starting
+
+  # ── React frontend ────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:   # data persists between `docker compose up/down` cycles

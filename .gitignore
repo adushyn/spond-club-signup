@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.vercel/
+
+# Environment – never commit secrets
+.env
+.env.local
+.env.*.local
+
+# Spring local profile – contains real DB credentials
+backend/src/main/resources/application-local.properties
+
+# Maven build output
+backend/target/
+
+# Go build cache
+*.exe
+*.test
+
+# Editor
+.DS_Store
+.idea/
+.vscode/
+.vercel

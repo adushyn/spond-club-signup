@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: spond-api
+    runtime: java
+    rootDir: backend
+    buildCommand: mvn package -DskipTests
+    startCommand: java -jar target/spond-club-signup-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: JAVA_VERSION
+        value: "17"
